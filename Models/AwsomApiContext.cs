@@ -6,6 +6,7 @@ namespace awsomAPI.Models {
   public class AwsomApiContext : DbContext {
     public AwsomApiContext(DbContextOptions<AwsomApiContext> options) : base(options) {}
     public DbSet<User> Users { get; set; }
+    public DbSet<TrialRequest> TrialRequsets { get; set; }
   }
 
 }

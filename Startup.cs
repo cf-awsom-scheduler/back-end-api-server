@@ -19,6 +19,7 @@ namespace awsomAPI
 {
     public class Startup
     {
+      private string _connectionString = null;
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -29,8 +30,9 @@ namespace awsomAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+             _connectionString = Configuration["Database:ConnectionString"];
             services.AddDbContext<AwsomApiContext>( opt => 
-              opt.UseNpgsql(Configuration.GetConnectionString("ConnectionString")));
+              opt.UseNpgsql(_connectionString));
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
 
