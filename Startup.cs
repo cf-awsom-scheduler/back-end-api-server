@@ -30,7 +30,7 @@ namespace awsomAPI
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<AwsomApiContext>( opt => 
-              opt.UseNpgsql("CONNECTION STRING GOES HERE"));
+              opt.UseNpgsql(Configuration.GetConnectionString("ConnectionString")));
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
 
