@@ -34,20 +34,5 @@ namespace awsomAPI.Controllers
             }
             return user;
         }
-
-        [HttpPost]
-        public void Post()
-        {
-        }
-
-        [HttpPut("{id}")]
-        public void Put()
-        {
-        }
-
-        [HttpDelete("{id}")]
-        public void Delete()
-        {
-        }
     }
 }
