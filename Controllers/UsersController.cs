@@ -34,5 +34,10 @@ namespace awsomAPI.Controllers
             }
             return user;
         }
+        [HttpGet("test")]
+        public string TestRoute()
+        {
+          return "success";
+        }
     }
 }
