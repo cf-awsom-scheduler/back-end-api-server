@@ -32,7 +32,7 @@ namespace awsomAPI
         {
              _connectionString = Configuration["ProductionConnection"];
             services.AddDbContext<AwsomApiContext>( opt => 
-              opt.UseSqlServer(_connectionString));
+              opt.UseSqlServer(Configuration.GetConnectionString("ProductionConnection")));
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
 
