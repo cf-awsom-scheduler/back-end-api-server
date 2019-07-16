@@ -36,9 +36,6 @@ namespace awsomAPI.Models {
     public string Region {get; set;}
 
     [Required]
-    public List<string> Instrument {get; set;}
-
-    [Required]
     public bool HasInstrument {get; set;}
 
     public string Availability {get; set;}
@@ -47,6 +44,5 @@ namespace awsomAPI.Models {
 
     public string Notes {get; set;}
 
-    public List<string> TeachersSelected {get; set;}
   }
 }

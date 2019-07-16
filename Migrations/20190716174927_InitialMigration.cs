@@ -1,6 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
-using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace awsomAPI.Migrations
 {
@@ -13,7 +12,7 @@ namespace awsomAPI.Migrations
                 columns: table => new
                 {
                     Id = table.Column<long>(nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn),
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     ParentName = table.Column<string>(nullable: false),
                     StudentName = table.Column<string>(nullable: false),
                     StudentBirthDate = table.Column<string>(nullable: true),
@@ -23,12 +22,10 @@ namespace awsomAPI.Migrations
                     City = table.Column<string>(nullable: false),
                     ZipCode = table.Column<int>(nullable: false),
                     Region = table.Column<string>(nullable: false),
-                    Instrument = table.Column<List<string>>(nullable: false),
                     HasInstrument = table.Column<bool>(nullable: false),
                     Availability = table.Column<string>(nullable: true),
                     Experience = table.Column<string>(nullable: true),
-                    Notes = table.Column<string>(nullable: true),
-                    TeachersSelected = table.Column<List<string>>(nullable: true)
+                    Notes = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -40,13 +37,12 @@ namespace awsomAPI.Migrations
                 columns: table => new
                 {
                     Id = table.Column<long>(nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn),
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     Name = table.Column<string>(nullable: false),
                     Email = table.Column<string>(nullable: false),
                     Role = table.Column<string>(nullable: false),
                     Password = table.Column<string>(nullable: true),
                     Region = table.Column<string>(nullable: false),
-                    InstrumentsTaught = table.Column<List<string>>(nullable: true),
                     Address = table.Column<string>(nullable: true),
                     City = table.Column<string>(nullable: true),
                     Zip = table.Column<int>(nullable: false)
