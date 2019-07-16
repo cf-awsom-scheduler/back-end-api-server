@@ -12,7 +12,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using Npgsql.EntityFrameworkCore.PostgreSQL;
+// using Npgsql.EntityFrameworkCore.PostgreSQL;
 using awsomAPI.Models;
 
 namespace awsomAPI
@@ -30,9 +30,9 @@ namespace awsomAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-             _connectionString = Configuration["Database:ConnectionString"];
+             _connectionString = Configuration["ProductionConnection"];
             services.AddDbContext<AwsomApiContext>( opt => 
-              opt.UseNpgsql(_connectionString));
+              opt.UseSqlServer(Configuration.GetConnectionString("ProductionConnection")));
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
 
