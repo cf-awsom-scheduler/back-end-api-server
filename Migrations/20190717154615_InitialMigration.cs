@@ -20,9 +20,10 @@ namespace awsomAPI.Migrations
                     Phone = table.Column<string>(nullable: true),
                     Address = table.Column<string>(nullable: false),
                     City = table.Column<string>(nullable: false),
-                    ZipCode = table.Column<int>(nullable: false),
+                    ZipCode = table.Column<string>(nullable: false),
                     Region = table.Column<string>(nullable: false),
-                    HasInstrument = table.Column<bool>(nullable: false),
+                    Instrument = table.Column<string>(nullable: false),
+                    HasInstrument = table.Column<string>(nullable: true),
                     Availability = table.Column<string>(nullable: true),
                     Experience = table.Column<string>(nullable: true),
                     Notes = table.Column<string>(nullable: true)
@@ -45,7 +46,8 @@ namespace awsomAPI.Migrations
                     Region = table.Column<string>(nullable: false),
                     Address = table.Column<string>(nullable: true),
                     City = table.Column<string>(nullable: true),
-                    Zip = table.Column<int>(nullable: false)
+                    Zip = table.Column<string>(nullable: true),
+                    Token = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {

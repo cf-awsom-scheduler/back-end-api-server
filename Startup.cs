@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
+using System.Linq;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -12,14 +14,16 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-// using Npgsql.EntityFrameworkCore.PostgreSQL;
+using Microsoft.IdentityModel.Tokens;
 using awsomAPI.Models;
+
+//Morgana - JWT Auth Functionality found here https://jasonwatmore.com/post/2019/01/08/aspnet-core-22-role-based-authorization-tutorial-with-example-api#app-settings-json
 
 namespace awsomAPI
 {
     public class Startup
     {
-      private string _connectionString = null;
+      private string _secret = null;
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -30,10 +34,32 @@ namespace awsomAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-             _connectionString = Configuration["ProductionConnection"];
+            _secret = Configuration["Secret"];
+            byte[] _key = Encoding.ASCII.GetBytes(_secret);
+
+            services.AddCors();
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+
             services.AddDbContext<AwsomApiContext>( opt => 
               opt.UseSqlServer(Configuration.GetConnectionString("ProductionConnection")));
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+
+            services.AddAuthentication( auth => 
+            {
+              auth.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+              auth.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+            .AddJwtBearer( jwt => 
+            {
+              jwt.RequireHttpsMetadata = true;
+              jwt.SaveToken = true;
+              jwt.TokenValidationParameters = new TokenValidationParameters
+              {
+                ValidateIssuerSigningKey = true,
+                IssuerSigningKey = new SymmetricSecurityKey(_key),
+                ValidateIssuer = false,
+                ValidateAudience = false
+              };
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -50,7 +76,9 @@ namespace awsomAPI
             }
 
             app.UseHttpsRedirection();
+            app.UseAuthentication();
             app.UseMvc();
+            app.UseCors( settings => settings.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
         }
     }
 }

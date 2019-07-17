@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,40 +8,51 @@ using awsomAPI.Models;
 
 namespace awsomAPI.Controllers
 {
+  [Authorize]
   [Route("/trialRequests")]
   [ApiController]
 
   public class TrialRequestController : ControllerBase
   {
-        private readonly AwsomApiContext _context;
-        public TrialRequestController(AwsomApiContext context)
-        {
-            _context = context;
-        }
+    private readonly AwsomApiContext _context;
+    public TrialRequestController(AwsomApiContext context)
+    {
+      _context = context;
+    }
 
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<TrialRequest>>> GetTrialRequests() 
-        {
-            return await _context.TrialRequests.ToListAsync();
-        }
+    [Authorize(Roles = Role.Admin)]
+    [HttpGet]
+    public async Task<ActionResult<IEnumerable<TrialRequest>>> GetTrialRequests()
+    {
+      return await _context.TrialRequests.ToListAsync();
+    }
 
-        [HttpGet("{id}")]
-        public async Task<ActionResult<TrialRequest>> TrialRequestDetailView(long id) 
-        {
-          var trialRequest = await _context.TrialRequests.FindAsync(id);
+    [Authorize(Roles = Role.Admin +","+ Role.User)]
+    [HttpGet("{region}")]
+    public async Task<ActionResult<IEnumerable<TrialRequest>>> GetByRegion(string region)
+    {
+      return await _context.TrialRequests.Where(req => req.Region == region).ToListAsync();
+    }
 
-            if(trialRequest == null) {
-              return NotFound();
-            }
-            return trialRequest;
-        }
+    [Authorize(Roles = Role.Admin +","+ Role.User)]
+    [HttpGet("{id}")]
+    public async Task<ActionResult<TrialRequest>> TrialRequestDetailView(long id)
+    {
+      var trialRequest = await _context.TrialRequests.FindAsync(id);
 
-        [HttpPost]
-        public async Task<ActionResult<TrialRequest>> AddNewTrialRequest(TrialRequest trialRequest)
-        {
-          _context.TrialRequests.Add(trialRequest);
-          await _context.SaveChangesAsync();
-          return CreatedAtAction(nameof(TrialRequestDetailView), new { id = trialRequest.Id }, trialRequest);
-        }
+      if (trialRequest == null)
+      {
+        return NotFound();
+      }
+      return trialRequest;
+    }
+
+    [HttpPost]
+    public async Task<ActionResult<TrialRequest>> AddNewTrialRequest(TrialRequest trialRequest)
+    {
+      _context.TrialRequests.Add(trialRequest);
+      await _context.SaveChangesAsync();
+      return CreatedAtAction(nameof(TrialRequestDetailView), new { id = trialRequest.Id }, trialRequest);
+    }
   }
 }

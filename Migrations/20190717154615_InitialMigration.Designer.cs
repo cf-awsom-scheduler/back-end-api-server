@@ -9,7 +9,7 @@ using awsomAPI.Models;
 namespace awsomAPI.Migrations
 {
     [DbContext(typeof(AwsomApiContext))]
-    [Migration("20190716174927_InitialMigration")]
+    [Migration("20190717154615_InitialMigration")]
     partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -39,7 +39,10 @@ namespace awsomAPI.Migrations
 
                     b.Property<string>("Experience");
 
-                    b.Property<bool>("HasInstrument");
+                    b.Property<string>("HasInstrument");
+
+                    b.Property<string>("Instrument")
+                        .IsRequired();
 
                     b.Property<string>("Notes");
 
@@ -56,7 +59,8 @@ namespace awsomAPI.Migrations
                     b.Property<string>("StudentName")
                         .IsRequired();
 
-                    b.Property<int>("ZipCode");
+                    b.Property<string>("ZipCode")
+                        .IsRequired();
 
                     b.HasKey("Id");
 
@@ -87,7 +91,9 @@ namespace awsomAPI.Migrations
                     b.Property<string>("Role")
                         .IsRequired();
 
-                    b.Property<int>("Zip");
+                    b.Property<string>("Token");
+
+                    b.Property<string>("Zip");
 
                     b.HasKey("Id");
 
