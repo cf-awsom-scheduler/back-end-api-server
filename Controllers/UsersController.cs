@@ -2,27 +2,39 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Options;
+using Microsoft.IdentityModel.Tokens;
+using System;
 using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
+using System.Security.Claims;
+using System.Text;
 using System.Threading.Tasks;
 using awsomAPI.Models;
 
 namespace awsomAPI.Controllers
 {
-    [Route("/users")]
-    [ApiController]
     [Authorize]
+    [ApiController]
+    [Route("/users")]
     public class RolesController : ControllerBase
     {
         private readonly AwsomApiContext _context;
+        public IConfiguration Configuration { get; set; }
 
         public RolesController(AwsomApiContext context)
         {
             _context = context;
         }
+
+        public RolesController(IConfiguration configuration)
+        {
+            Configuration = configuration;
+        }
         
         [HttpGet]
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = Role.Admin)]
         public async Task<ActionResult<IEnumerable<User>>> GetUsers()
         {
             List<User> users = await _context.Users.ToListAsync();
@@ -42,33 +54,25 @@ namespace awsomAPI.Controllers
               user.Password = null;
             }
 
-            // var currentUserId = int.Parse(User.Identity.Name);
-            // if (id != currentUserId && !User.IsInRole(Role.Admin)) {
-            //   return Forbid();
-            // }
-            // return user;
+            var currentUserId = int.Parse(User.Identity.Name);
+            if (id != currentUserId && !User.IsInRole(Role.Admin)) {
+              return Forbid();
+            }
+            return user;
         }
         [HttpPost("signin")]
         [AllowAnonymous]
-        public Task<ActionResult> signin()
+        public async Task<ActionResult<User>> signin([FromBody]User userFromFrontend)
         {
+          string email = userFromFrontend.Email;
+          string password = userFromFrontend.Password;
+          var user = _context.Users.SingleOrDefault(x => x.Email == email && x.Password == password);
 
-        }
-    }
-}
-
-/*
-        public User Authenticate(string username, string password)
-        {
-            var user = _users.SingleOrDefault(x => x.Username == username && x.Password == password);
-
-            // return null if user not found
-            if (user == null)
-                return null;
-
-            // authentication successful so generate jwt token
-            var tokenHandler = new JwtSecurityTokenHandler();
-            var key = Encoding.ASCII.GetBytes(_appSettings.Secret);
+          if(user == null) {
+            return NotFound();
+          }
+          JwtSecurityTokenHandler tokenHandler = new JwtSecurityTokenHandler();
+            var key = Encoding.ASCII.GetBytes(Configuration["Secret"]);
             var tokenDescriptor = new SecurityTokenDescriptor
             {
                 Subject = new ClaimsIdentity(new Claim[] 
@@ -87,4 +91,5 @@ namespace awsomAPI.Controllers
 
             return user;
         }
- */
+    }
+}
