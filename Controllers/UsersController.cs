@@ -10,6 +10,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using awsomAPI.Models;
 
@@ -20,12 +21,12 @@ namespace awsomAPI.Controllers
   [Authorize]
   [ApiController]
   [Route("/users")]
-  public class RolesController : ControllerBase
+  public class UsersController : ControllerBase
   {
     private readonly AwsomApiContext _context;
     public IConfiguration Configuration { get; set; }
 
-    public RolesController(AwsomApiContext context, IConfiguration configuration)
+    public UsersController(AwsomApiContext context, IConfiguration configuration)
     {
       _context = context;
       Configuration = configuration;
@@ -97,15 +98,16 @@ namespace awsomAPI.Controllers
     [AllowAnonymous]
     public async Task<ActionResult<User>> addUser(User user)
     {
-      {
-        if(user.Code == null || user.Code.Equals(Configuration["Code"])) {
-          return Forbid();
-        }
-        _context.Users.Add(user);
-        await _context.SaveChangesAsync();
+      Regex awsomEmail = new Regex(@"@awsom\.info$");
 
-        return CreatedAtAction(nameof(GetUser), new { id = user.Id }, user);
+      if(!awsomEmail.IsMatch(user.Email.ToLower())){
+        return Forbid();
       }
+
+      _context.Users.Add(user);
+      await _context.SaveChangesAsync();
+
+      return CreatedAtAction(nameof(GetUser), new { id = user.Id }, user);
     }
   }
 }

@@ -23,7 +23,6 @@ namespace awsomAPI
 {
     public class Startup
     {
-      private string _connectionString = null;
       private string _secret = null;
         public Startup(IConfiguration configuration)
         {
