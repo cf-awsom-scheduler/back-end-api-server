@@ -20,5 +20,6 @@ namespace awsomAPI.Models {
     public string City { get; set; }
     public string Zip { get; set; }
     public string Token { get; set; }
+    public string Code { get; set; }
   }
 }

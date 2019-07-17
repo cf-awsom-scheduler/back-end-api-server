@@ -98,6 +98,9 @@ namespace awsomAPI.Controllers
     public async Task<ActionResult<User>> addUser(User user)
     {
       {
+        if(user.Code == null || user.Code.Equals(Configuration["Code"])) {
+          return Forbid();
+        }
         _context.Users.Add(user);
         await _context.SaveChangesAsync();
 
