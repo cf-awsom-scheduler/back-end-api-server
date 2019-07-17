@@ -17,6 +17,8 @@ using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using awsomAPI.Models;
 
+//Morgana - JWT Auth Functionality found here https://jasonwatmore.com/post/2019/01/08/aspnet-core-22-role-based-authorization-tutorial-with-example-api#app-settings-json
+
 namespace awsomAPI
 {
     public class Startup
@@ -33,7 +35,6 @@ namespace awsomAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            _connectionString = Configuration["ProductionConnection"];
             _secret = Configuration["Secret"];
             byte[] _key = Encoding.ASCII.GetBytes(_secret);
 
@@ -41,7 +42,7 @@ namespace awsomAPI
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
             services.AddDbContext<AwsomApiContext>( opt => 
-              opt.UseSqlServer(Configuration.GetConnectionString("ProductionConnection")));
+              opt.UseSqlServer(Configuration.GetConnectionString("DefaultString")));
 
             services.AddAuthentication( auth => 
             {
@@ -50,7 +51,7 @@ namespace awsomAPI
             })
             .AddJwtBearer( jwt => 
             {
-              jwt.RequireHttpsMetadata = false;
+              jwt.RequireHttpsMetadata = true;
               jwt.SaveToken = true;
               jwt.TokenValidationParameters = new TokenValidationParameters
               {

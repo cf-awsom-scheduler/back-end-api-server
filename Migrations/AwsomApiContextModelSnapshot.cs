@@ -89,6 +89,8 @@ namespace awsomAPI.Migrations
                     b.Property<string>("Role")
                         .IsRequired();
 
+                    b.Property<string>("Token");
+
                     b.Property<string>("Zip");
 
                     b.HasKey("Id");
