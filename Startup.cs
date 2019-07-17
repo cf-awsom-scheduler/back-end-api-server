@@ -41,7 +41,7 @@ namespace awsomAPI
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
             services.AddDbContext<AwsomApiContext>( opt => 
-              opt.UseSqlServer(Configuration.GetConnectionString("DefaultString")));
+              opt.UseSqlServer(Configuration.GetConnectionString("ProductionConnection")));
 
             services.AddAuthentication( auth => 
             {
