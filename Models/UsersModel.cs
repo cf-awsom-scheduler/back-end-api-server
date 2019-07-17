@@ -7,13 +7,11 @@ namespace awsomAPI.Models {
   public class User {        
     [Key, Required]
     public long Id { get; set; }
-        [Required]
+    [Required]
     public string Name { get; set; }
-        [Required]
+    [Required]
     public string Email { get; set; }
-        [Required]
-    //Morgana - Change this to enum with teacher (or user) and admin as the options
-    //Default should be user
+    [Required]
     public string Role { get; set; }
     public string Password { get; set; }
     [Required]
@@ -21,5 +19,6 @@ namespace awsomAPI.Models {
     public string Address { get; set; }
     public string City { get; set; }
     public string Zip { get; set; }
+    public string Token { get; set; }
   }
 }

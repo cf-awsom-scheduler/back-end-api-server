@@ -9,8 +9,8 @@ using awsomAPI.Models;
 namespace awsomAPI.Migrations
 {
     [DbContext(typeof(AwsomApiContext))]
-    [Migration("20190716174927_InitialMigration")]
-    partial class InitialMigration
+    [Migration("20190717205236_StudentTeacherRelationsModel")]
+    partial class StudentTeacherRelationsModel
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -19,6 +19,21 @@ namespace awsomAPI.Migrations
                 .HasAnnotation("ProductVersion", "2.2.4-servicing-10062")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+            modelBuilder.Entity("awsomAPI.Models.StudentTeacherSelectedRelation", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<long>("TeacherId");
+
+                    b.Property<long>("TrialRequestId");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("TeacherSelections");
+                });
 
             modelBuilder.Entity("awsomAPI.Models.TrialRequest", b =>
                 {
@@ -39,7 +54,10 @@ namespace awsomAPI.Migrations
 
                     b.Property<string>("Experience");
 
-                    b.Property<bool>("HasInstrument");
+                    b.Property<string>("HasInstrument");
+
+                    b.Property<string>("Instrument")
+                        .IsRequired();
 
                     b.Property<string>("Notes");
 
@@ -56,7 +74,8 @@ namespace awsomAPI.Migrations
                     b.Property<string>("StudentName")
                         .IsRequired();
 
-                    b.Property<int>("ZipCode");
+                    b.Property<string>("ZipCode")
+                        .IsRequired();
 
                     b.HasKey("Id");
 
@@ -87,7 +106,9 @@ namespace awsomAPI.Migrations
                     b.Property<string>("Role")
                         .IsRequired();
 
-                    b.Property<int>("Zip");
+                    b.Property<string>("Token");
+
+                    b.Property<string>("Zip");
 
                     b.HasKey("Id");
 

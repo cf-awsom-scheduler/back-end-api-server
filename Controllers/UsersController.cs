@@ -1,44 +1,112 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Options;
+using Microsoft.IdentityModel.Tokens;
+using System;
 using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
+using System.Security.Claims;
+using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using awsomAPI.Models;
 
+//Morgana - JWT Auth Functionality found here https://jasonwatmore.com/post/2019/01/08/aspnet-core-22-role-based-authorization-tutorial-with-example-api#app-settings-json
+
 namespace awsomAPI.Controllers
 {
-    [Route("/")]
-    [ApiController]
-    public class RolesController : ControllerBase
+  [Authorize]
+  [ApiController]
+  [Route("/users")]
+  public class UsersController : ControllerBase
+  {
+    private readonly AwsomApiContext _context;
+    public IConfiguration Configuration { get; set; }
+
+    public UsersController(AwsomApiContext context, IConfiguration configuration)
     {
-        private readonly AwsomApiContext _context;
-
-        public RolesController(AwsomApiContext context)
-        {
-            _context = context;
-        }
-        
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<User>>> GetUsers()
-        {
-            return await _context.Users.ToListAsync();
-        }
-
-        [HttpGet("{id}")]
-        public async Task<ActionResult<User>> GetUser(long id)
-        {
-            var user = await _context.Users.FindAsync(id);
-
-            if(user == null) {
-              return NotFound();
-            }
-            return user;
-        }
-        [HttpGet("test")]
-        public string TestRoute()
-        {
-          return "success";
-        }
+      _context = context;
+      Configuration = configuration;
     }
+
+    [HttpGet]
+    [Authorize(Roles = Role.Admin)]
+    public async Task<ActionResult<IEnumerable<User>>> GetUsers()
+    {
+      List<User> users = await _context.Users.ToListAsync();
+      users.ForEach(entry => entry.Password = null);
+      return users;
+    }
+
+    [HttpGet("{id}")]
+    public async Task<ActionResult<User>> GetUser(long id)
+    {
+      var user = await _context.Users.FindAsync(id);
+
+      if (user == null)
+      {
+        return NotFound();
+      }
+      if (user != null)
+      {
+        user.Password = null;
+      }
+
+      int currentUserId = int.Parse(User.Identity.Name);
+      if (id != currentUserId && !User.IsInRole(Role.Admin))
+      {
+        return Forbid();
+      }
+      return user;
+    }
+    [HttpPost("signin")]
+    [AllowAnonymous]
+    public async Task<ActionResult<User>> Signin([FromBody]User userFromFrontend)
+    {
+      string email = userFromFrontend.Email;
+      string password = userFromFrontend.Password;
+      User user = _context.Users.FirstOrDefault(x => x.Email == email && x.Password == password);
+
+      if (user == null)
+      {
+        return NotFound();
+      }
+      JwtSecurityTokenHandler tokenHandler = new JwtSecurityTokenHandler();
+      byte[] key = Encoding.ASCII.GetBytes(Configuration["Secret"]);
+      SecurityTokenDescriptor tokenDescriptor = new SecurityTokenDescriptor
+      {
+        Subject = new ClaimsIdentity(new Claim[]
+          {
+            new Claim(ClaimTypes.Name, user.Id.ToString()),
+            new Claim(ClaimTypes.Role, user.Role)
+          }),
+        Expires = DateTime.UtcNow.AddDays(7),
+        SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
+      };
+      SecurityToken token = tokenHandler.CreateToken(tokenDescriptor);
+      user.Token = tokenHandler.WriteToken(token);
+
+      user.Password = null;
+
+      return user;
+    }
+    [HttpPost("signup")]
+    [AllowAnonymous]
+    public async Task<ActionResult<User>> AddUser(User user)
+    {
+      Regex awsomEmail = new Regex(@"@awsom\.info$");
+
+      if(!awsomEmail.IsMatch(user.Email.ToLower())){
+        return Forbid();
+      }
+
+      _context.Users.Add(user);
+      await _context.SaveChangesAsync();
+
+      return CreatedAtAction(nameof(GetUser), new { id = user.Id }, user);
+    }
+  }
 }

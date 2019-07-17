@@ -9,8 +9,8 @@ using awsomAPI.Models;
 namespace awsomAPI.Migrations
 {
     [DbContext(typeof(AwsomApiContext))]
-    [Migration("20190716223508_StringDataTypesInModel")]
-    partial class StringDataTypesInModel
+    [Migration("20190717154615_InitialMigration")]
+    partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -90,6 +90,8 @@ namespace awsomAPI.Migrations
 
                     b.Property<string>("Role")
                         .IsRequired();
+
+                    b.Property<string>("Token");
 
                     b.Property<string>("Zip");
 

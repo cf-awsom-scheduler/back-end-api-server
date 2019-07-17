@@ -18,6 +18,21 @@ namespace awsomAPI.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+            modelBuilder.Entity("awsomAPI.Models.StudentTeacherSelectedRelation", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<long>("TeacherId");
+
+                    b.Property<long>("TrialRequestId");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("TeacherSelections");
+                });
+
             modelBuilder.Entity("awsomAPI.Models.TrialRequest", b =>
                 {
                     b.Property<long>("Id")
@@ -88,6 +103,8 @@ namespace awsomAPI.Migrations
 
                     b.Property<string>("Role")
                         .IsRequired();
+
+                    b.Property<string>("Token");
 
                     b.Property<string>("Zip");
 
