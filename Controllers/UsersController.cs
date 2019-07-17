@@ -64,7 +64,7 @@ namespace awsomAPI.Controllers
     }
     [HttpPost("signin")]
     [AllowAnonymous]
-    public async Task<ActionResult<User>> signin([FromBody]User userFromFrontend)
+    public async Task<ActionResult<User>> Signin([FromBody]User userFromFrontend)
     {
       string email = userFromFrontend.Email;
       string password = userFromFrontend.Password;
@@ -95,7 +95,7 @@ namespace awsomAPI.Controllers
     }
     [HttpPost("signup")]
     [AllowAnonymous]
-    public async Task<ActionResult<User>> addUser(User user)
+    public async Task<ActionResult<User>> AddUser(User user)
     {
       Regex awsomEmail = new Regex(@"@awsom\.info$");
 
