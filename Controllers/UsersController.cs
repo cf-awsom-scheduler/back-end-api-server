@@ -55,7 +55,7 @@ namespace awsomAPI.Controllers
         user.Password = null;
       }
 
-      var currentUserId = int.Parse(User.Identity.Name);
+      int currentUserId = int.Parse(User.Identity.Name);
       if (id != currentUserId && !User.IsInRole(Role.Admin))
       {
         return Forbid();
@@ -68,15 +68,15 @@ namespace awsomAPI.Controllers
     {
       string email = userFromFrontend.Email;
       string password = userFromFrontend.Password;
-      var user = _context.Users.FirstOrDefault(x => x.Email == email && x.Password == password);
+      User user = _context.Users.FirstOrDefault(x => x.Email == email && x.Password == password);
 
       if (user == null)
       {
         return NotFound();
       }
       JwtSecurityTokenHandler tokenHandler = new JwtSecurityTokenHandler();
-      var key = Encoding.ASCII.GetBytes(Configuration["Secret"]);
-      var tokenDescriptor = new SecurityTokenDescriptor
+      byte[] key = Encoding.ASCII.GetBytes(Configuration["Secret"]);
+      SecurityTokenDescriptor tokenDescriptor = new SecurityTokenDescriptor
       {
         Subject = new ClaimsIdentity(new Claim[]
           {
@@ -86,10 +86,9 @@ namespace awsomAPI.Controllers
         Expires = DateTime.UtcNow.AddDays(7),
         SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
       };
-      var token = tokenHandler.CreateToken(tokenDescriptor);
+      SecurityToken token = tokenHandler.CreateToken(tokenDescriptor);
       user.Token = tokenHandler.WriteToken(token);
 
-      // remove password before returning
       user.Password = null;
 
       return user;
