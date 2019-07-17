@@ -27,12 +27,12 @@ namespace awsomAPI.Controllers
       return await _context.TrialRequests.ToListAsync();
     }
 
-    [Authorize(Roles = Role.Admin +","+ Role.User)]
-    [HttpGet("{region}")]
-    public async Task<ActionResult<IEnumerable<TrialRequest>>> GetByRegion(string region)
-    {
-      return await _context.TrialRequests.Where(req => req.Region == region).ToListAsync();
-    }
+    // [Authorize(Roles = Role.Admin +","+ Role.User)]
+    // [HttpGet("{region}")]
+    // public async Task<ActionResult<IEnumerable<TrialRequest>>> GetByRegion(string region)
+    // {
+    //   return await _context.TrialRequests.Where(req => req.Region == region).ToListAsync();
+    // }
 
     [Authorize(Roles = Role.Admin +","+ Role.User)]
     [HttpGet("{id}")]
