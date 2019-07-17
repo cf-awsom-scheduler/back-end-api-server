@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,6 +8,7 @@ using awsomAPI.Models;
 
 namespace awsomAPI.Controllers
 {
+  [Authorize]
   [Route("/trialRequests")]
   [ApiController]
 
@@ -18,12 +20,21 @@ namespace awsomAPI.Controllers
       _context = context;
     }
 
+    [Authorize(Roles = Role.Admin)]
     [HttpGet]
     public async Task<ActionResult<IEnumerable<TrialRequest>>> GetTrialRequests()
     {
       return await _context.TrialRequests.ToListAsync();
     }
 
+    [Authorize(Roles = Role.Admin +","+ Role.User)]
+    [HttpGet("{region}")]
+    public async Task<ActionResult<IEnumerable<TrialRequest>>> GetByRegion(string region)
+    {
+      return await _context.TrialRequests.Where(req => req.Region == region).ToListAsync();
+    }
+
+    [Authorize(Roles = Role.Admin +","+ Role.User)]
     [HttpGet("{id}")]
     public async Task<ActionResult<TrialRequest>> TrialRequestDetailView(long id)
     {
