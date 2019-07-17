@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using System.Collections.Generic;
@@ -8,8 +9,9 @@ using awsomAPI.Models;
 
 namespace awsomAPI.Controllers
 {
-    [Route("/")]
+    [Route("/users")]
     [ApiController]
+    [Authorize]
     public class RolesController : ControllerBase
     {
         private readonly AwsomApiContext _context;
@@ -20,9 +22,12 @@ namespace awsomAPI.Controllers
         }
         
         [HttpGet]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult<IEnumerable<User>>> GetUsers()
         {
-            return await _context.Users.ToListAsync();
+            List<User> users = await _context.Users.ToListAsync();
+            users.ForEach( entry => entry.Password = null);
+            return users;
         }
 
         [HttpGet("{id}")]
@@ -33,12 +38,53 @@ namespace awsomAPI.Controllers
             if(user == null) {
               return NotFound();
             }
-            return user;
+            if(user != null) {
+              user.Password = null;
+            }
+
+            // var currentUserId = int.Parse(User.Identity.Name);
+            // if (id != currentUserId && !User.IsInRole(Role.Admin)) {
+            //   return Forbid();
+            // }
+            // return user;
         }
-        [HttpGet("test")]
-        public string TestRoute()
+        [HttpPost("signin")]
+        [AllowAnonymous]
+        public Task<ActionResult> signin()
         {
-          return "success";
+
         }
     }
 }
+
+/*
+        public User Authenticate(string username, string password)
+        {
+            var user = _users.SingleOrDefault(x => x.Username == username && x.Password == password);
+
+            // return null if user not found
+            if (user == null)
+                return null;
+
+            // authentication successful so generate jwt token
+            var tokenHandler = new JwtSecurityTokenHandler();
+            var key = Encoding.ASCII.GetBytes(_appSettings.Secret);
+            var tokenDescriptor = new SecurityTokenDescriptor
+            {
+                Subject = new ClaimsIdentity(new Claim[] 
+                {
+                    new Claim(ClaimTypes.Name, user.Id.ToString()),
+                    new Claim(ClaimTypes.Role, user.Role)
+                }),
+                Expires = DateTime.UtcNow.AddDays(7),
+                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
+            };
+            var token = tokenHandler.CreateToken(tokenDescriptor);
+            user.Token = tokenHandler.WriteToken(token);
+
+            // remove password before returning
+            user.Password = null;
+
+            return user;
+        }
+ */
