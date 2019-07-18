@@ -5,11 +5,11 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace awsomAPI.Models
 {
-  public class StudentTeacherSelectedRelation
-  {
-    [Key, Required]
-    public long Id { get; set; }
-    public string TrialRequestId { get; set; }
-    public string TeacherId { get; set; }
-  }
+    public class StudentTeacherSelectedRelation
+    {
+        [Key, Required]
+        public long Id { get; set; }
+        public string TrialRequestId { get; set; }
+        public string TeacherId { get; set; }
+    }
 }
