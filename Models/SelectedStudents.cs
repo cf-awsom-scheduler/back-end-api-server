@@ -1,26 +1,12 @@
-///-------------------------------------------------------------------------------------------------
-// file:	Models\SelectedStudents.cs
-//
-// summary:	Implements the selected students class
-///-------------------------------------------------------------------------------------------------
-
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-
-///-------------------------------------------------------------------------------------------------
-// namespace: awsomAPI.Models
-//
-// summary:	.
-///-------------------------------------------------------------------------------------------------
-
 namespace awsomAPI.Models
 {
     ///-------------------------------------------------------------------------------------------------
     /// <summary>   A student teacher selected relation. </summary>
-    ///
     /// <remarks>   Vanvoljg, 18-Jul-19. </remarks>
     ///-------------------------------------------------------------------------------------------------
 
@@ -28,7 +14,6 @@ namespace awsomAPI.Models
     {
         ///-------------------------------------------------------------------------------------------------
         /// <summary>   Gets or sets the identifier. </summary>
-        ///
         /// <value> The identifier. </value>
         ///-------------------------------------------------------------------------------------------------
 
@@ -37,7 +22,6 @@ namespace awsomAPI.Models
 
         ///-------------------------------------------------------------------------------------------------
         /// <summary>   Gets or sets the identifier of the trial request. </summary>
-        ///
         /// <value> The identifier of the trial request. </value>
         ///-------------------------------------------------------------------------------------------------
 
@@ -45,7 +29,6 @@ namespace awsomAPI.Models
 
         ///-------------------------------------------------------------------------------------------------
         /// <summary>   Gets or sets the identifier of the teacher. </summary>
-        ///
         /// <value> The identifier of the teacher. </value>
         ///-------------------------------------------------------------------------------------------------
 

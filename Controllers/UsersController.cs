@@ -1,10 +1,4 @@
-﻿///-------------------------------------------------------------------------------------------------
-// file:	Controllers\UsersController.cs
-//
-// summary:	Implements the users controller class.
-///-------------------------------------------------------------------------------------------------
-
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -25,9 +19,8 @@ using awsomAPI.Models;
 namespace awsomAPI.Controllers
 {
     ///-------------------------------------------------------------------------------------------------
-    /// <summary> A controller for handling users. </summary>
-    ///
-    /// <remarks> Vanvoljg, 18-Jul-19. </remarks>
+    /// <summary>   A controller for handling users. </summary>
+    /// <remarks>   Vanvoljg, 18-Jul-19. </remarks>
     ///-------------------------------------------------------------------------------------------------
 
     [Authorize]
@@ -40,9 +33,7 @@ namespace awsomAPI.Controllers
 
         ///-------------------------------------------------------------------------------------------------
         /// <summary>   Constructor. </summary>
-        ///
         /// <remarks>   Vanvoljg, 18-Jul-19. </remarks>
-        ///
         /// <param name="context">          The context. </param>
         /// <param name="configuration">    The configuration. </param>
         ///-------------------------------------------------------------------------------------------------
@@ -58,9 +49,7 @@ namespace awsomAPI.Controllers
         ///     (An Action that handles HTTP GET requests) (Restricted to Roles = Role.Admin) gets the
         ///     users.
         /// </summary>
-        ///
         /// <remarks>   Vanvoljg, 18-Jul-19. </remarks>
-        ///
         /// <returns>   An asynchronous result that yields all the users. </returns>
         ///-------------------------------------------------------------------------------------------------
 
@@ -75,11 +64,8 @@ namespace awsomAPI.Controllers
 
         ///-------------------------------------------------------------------------------------------------
         /// <summary>   (An Action that handles HTTP GET requests) gets a user. </summary>
-        ///
         /// <remarks>   Vanvoljg, 18-Jul-19. </remarks>
-        ///
         /// <param name="id">   The identifier. </param>
-        ///
         /// <returns>   An asynchronous result that yields the user. </returns>
         ///-------------------------------------------------------------------------------------------------
 
@@ -109,11 +95,8 @@ namespace awsomAPI.Controllers
         /// <summary>
         ///     (An Action that handles HTTP POST requests) signins the given user from frontend.
         /// </summary>
-        ///
         /// <remarks>   Vanvoljg, 18-Jul-19. </remarks>
-        ///
         /// <param name="userFromFrontend"> The user from frontend. </param>
-        ///
         /// <returns>   An asynchronous result that yields an ActionResult&lt;User&gt;. </returns>
         ///-------------------------------------------------------------------------------------------------
 
@@ -151,11 +134,8 @@ namespace awsomAPI.Controllers
 
         ///-------------------------------------------------------------------------------------------------
         /// <summary>   (An Action that handles HTTP POST requests) adds a user. </summary>
-        ///
         /// <remarks>   Vanvoljg, 18-Jul-19. </remarks>
-        ///
         /// <param name="user"> The user. </param>
-        ///
         /// <returns>   An asynchronous result that yields an ActionResult&lt;User&gt;. </returns>
         ///-------------------------------------------------------------------------------------------------
 

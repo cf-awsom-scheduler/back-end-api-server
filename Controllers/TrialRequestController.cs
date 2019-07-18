@@ -1,9 +1,3 @@
-///-------------------------------------------------------------------------------------------------
-// file:	Controllers\TrialRequestController.cs
-//
-// summary:	Implements the trial request controller class.
-///-------------------------------------------------------------------------------------------------
-
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
@@ -11,13 +5,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using awsomAPI.Models;
-
-
-///-------------------------------------------------------------------------------------------------
-// namespace: awsomAPI.Controllers
-//
-// summary:	Trial Request controller for working with trial requests.
-///-------------------------------------------------------------------------------------------------
 
 namespace awsomAPI.Controllers
 {
@@ -27,13 +14,19 @@ namespace awsomAPI.Controllers
 
     ///-------------------------------------------------------------------------------------------------
     /// <summary>   A controller for handling trial requests. </summary>
-    ///
     /// <remarks>   Vanvoljg, 18-Jul-19. </remarks>
     ///-------------------------------------------------------------------------------------------------
 
     public class TrialRequestController : ControllerBase
     {
         private readonly AwsomApiContext _context;
+
+        ///-------------------------------------------------------------------------------------------------
+        /// <summary>   Constructor. </summary>
+        /// <remarks>   Vanvoljg, 18-Jul-19. </remarks>
+        /// <param name="context">  The context. </param>
+        ///-------------------------------------------------------------------------------------------------
+
         public TrialRequestController(AwsomApiContext context)
         {
             _context = context;
@@ -44,9 +37,7 @@ namespace awsomAPI.Controllers
         ///     (An Action that handles HTTP GET requests) (Restricted to Roles = Role.Admin) gets trial
         ///     requests.
         /// </summary>
-        ///
         /// <remarks>   Vanvoljg, 18-Jul-19. </remarks>
-        ///
         /// <returns>   An asynchronous result that yields the trial requests. </returns>
         ///-------------------------------------------------------------------------------------------------
 
@@ -69,11 +60,8 @@ namespace awsomAPI.Controllers
         ///     (An Action that handles HTTP GET requests) (Restricted to Roles = Role.Admin + "," +
         ///     Role.User) trial request detail view.
         /// </summary>
-        ///
         /// <remarks>   Vanvoljg, 18-Jul-19. </remarks>
-        ///
         /// <param name="id">   The identifier. </param>
-        ///
         /// <returns>   An asynchronous result that yields an ActionResult&lt;TrialRequest&gt;. </returns>
         ///-------------------------------------------------------------------------------------------------
 
@@ -95,11 +83,8 @@ namespace awsomAPI.Controllers
         ///     (An Action that handles HTTP POST requests) (Restricted to Roles = Role.Admin + "," +
         ///     Role.User) select student.
         /// </summary>
-        ///
         /// <remarks>   Vanvoljg, 18-Jul-19. </remarks>
-        ///
         /// <param name="selection">    The selection. </param>
-        ///
         /// <returns>   An asynchronous result that yields an ActionResult. </returns>
         ///-------------------------------------------------------------------------------------------------
 

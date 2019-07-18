@@ -1,10 +1,4 @@
-﻿///-------------------------------------------------------------------------------------------------
-// file:	Startup.cs
-//
-// summary:	Implements the startup class.
-///-------------------------------------------------------------------------------------------------
-
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Text;
@@ -25,26 +19,27 @@ using awsomAPI.Models;
 
 //Morgana - JWT Auth Functionality found here https://jasonwatmore.com/post/2019/01/08/aspnet-core-22-role-based-authorization-tutorial-with-example-api#app-settings-json.
 
-
-///-------------------------------------------------------------------------------------------------
-// namespace: awsomAPI
-//
-// summary:	.
-///-------------------------------------------------------------------------------------------------
-
 namespace awsomAPI
 {
+    ///-------------------------------------------------------------------------------------------------
+    /// <summary>   A startup. </summary>
+    /// <remarks>   Vanvoljg, 18-Jul-19. </remarks>
+    ///-------------------------------------------------------------------------------------------------
+
     public class Startup
     {
         private string _secret = null;
+
+        ///-------------------------------------------------------------------------------------------------
+        /// <summary>   Gets the configuration. </summary>
+        /// <value> The configuration. </value>
+        ///-------------------------------------------------------------------------------------------------
 
         public IConfiguration Configuration { get; }
 
         ///-------------------------------------------------------------------------------------------------
         /// <summary>   Constructor. </summary>
-        ///
         /// <remarks>   Vanvoljg, 18-Jul-19. </remarks>
-        ///
         /// <param name="configuration">    The configuration. </param>
         ///-------------------------------------------------------------------------------------------------
 
@@ -55,12 +50,9 @@ namespace awsomAPI
 
         ///-------------------------------------------------------------------------------------------------
         /// <summary>   Configure services. </summary>
-        ///
         /// <remarks>   Vanvoljg, 18-Jul-19. </remarks>
-        ///
         /// <param name="services"> The services. </param>
         ///-------------------------------------------------------------------------------------------------
-        // This method gets called by the runtime. Use this method to add services to the container.
 
         public void ConfigureServices(IServiceCollection services)
         {
@@ -93,13 +85,10 @@ namespace awsomAPI
 
         ///-------------------------------------------------------------------------------------------------
         /// <summary>   Configures. </summary>
-        ///
         /// <remarks>   Vanvoljg, 18-Jul-19. </remarks>
-        ///
         /// <param name="app">  The application. </param>
         /// <param name="env">  The environment. </param>
         ///-------------------------------------------------------------------------------------------------
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
