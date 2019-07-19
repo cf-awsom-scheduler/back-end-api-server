@@ -2,23 +2,90 @@ using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-namespace awsomAPI.Models {
-  [Table("Users")]
-  public class User {        
-    [Key, Required]
-    public long Id { get; set; }
-    [Required]
-    public string Name { get; set; }
-    [Required]
-    public string Email { get; set; }
-    [Required]
-    public string Role { get; set; }
-    public string Password { get; set; }
-    [Required]
-    public string Region { get; set; }
-    public string Address { get; set; }
-    public string City { get; set; }
-    public string Zip { get; set; }
-    public string Token { get; set; }
-  }
+
+namespace awsomAPI.Models
+{
+    ///-------------------------------------------------------------------------------------------------
+    /// <summary>   A user. </summary>
+    /// <remarks>   Vanvoljg, 18-Jul-19. </remarks>
+    ///-------------------------------------------------------------------------------------------------
+
+    [Table("Users")]
+    public class User
+    {
+        ///-------------------------------------------------------------------------------------------------
+        /// <summary>   Gets or sets the identifier. </summary>
+        /// <value> The identifier. </value>
+        ///-------------------------------------------------------------------------------------------------
+
+        [Key, Required]
+        public long Id { get; set; }
+
+        ///-------------------------------------------------------------------------------------------------
+        /// <summary>   Gets or sets the name. </summary>
+        /// <value> The name. </value>
+        ///-------------------------------------------------------------------------------------------------
+
+        [Required]
+        public string Name { get; set; }
+
+        ///-------------------------------------------------------------------------------------------------
+        /// <summary>   Gets or sets the email. </summary>
+        /// <value> The email. </value>
+        ///-------------------------------------------------------------------------------------------------
+
+        [Required]
+        public string Email { get; set; }
+
+        ///-------------------------------------------------------------------------------------------------
+        /// <summary>   Gets or sets the role. </summary>
+        /// <value> The role. </value>
+        ///-------------------------------------------------------------------------------------------------
+
+        [Required]
+        public string Role { get; set; }
+
+        ///-------------------------------------------------------------------------------------------------
+        /// <summary>   Gets or sets the password. </summary>
+        /// <value> The password. </value>
+        ///-------------------------------------------------------------------------------------------------
+
+        public string Password { get; set; }
+
+        ///-------------------------------------------------------------------------------------------------
+        /// <summary>   Gets or sets the region. </summary>
+        /// <value> The region. </value>
+        ///-------------------------------------------------------------------------------------------------
+
+        [Required]
+        public string Region { get; set; }
+
+        ///-------------------------------------------------------------------------------------------------
+        /// <summary>   Gets or sets the address. </summary>
+        /// <value> The address. </value>
+        ///-------------------------------------------------------------------------------------------------
+
+        public string Address { get; set; }
+
+        ///-------------------------------------------------------------------------------------------------
+        /// <summary>   Gets or sets the city. </summary>
+        /// <value> The city. </value>
+        ///-------------------------------------------------------------------------------------------------
+
+        public string City { get; set; }
+
+        ///-------------------------------------------------------------------------------------------------
+        /// <summary>   Gets or sets the zip. </summary>
+        /// <value> The zip. </value>
+        ///-------------------------------------------------------------------------------------------------
+
+        public string ZipCode { get; set; }
+
+        ///-------------------------------------------------------------------------------------------------
+        /// <summary>   Gets or sets the token. </summary>
+        /// <value> The token. </value>
+        ///-------------------------------------------------------------------------------------------------
+
+        public string Token { get; set; }
+    }
 }

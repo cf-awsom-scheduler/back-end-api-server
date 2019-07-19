@@ -10,12 +10,30 @@ using Microsoft.Extensions.Logging;
 
 namespace awsomAPI
 {
+    ///-------------------------------------------------------------------------------------------------
+    /// <summary>   A program. </summary>
+    /// <remarks>   Vanvoljg, 18-Jul-19. </remarks>
+    ///-------------------------------------------------------------------------------------------------
+
     public class Program
     {
+        ///-------------------------------------------------------------------------------------------------
+        /// <summary>   Main entry-point for this application. </summary>
+        /// <remarks>   Vanvoljg, 18-Jul-19. </remarks>
+        /// <param name="args"> An array of command-line argument strings. </param>
+        ///-------------------------------------------------------------------------------------------------
+
         public static void Main(string[] args)
         {
             CreateWebHostBuilder(args).Build().Run();
         }
+
+        ///-------------------------------------------------------------------------------------------------
+        /// <summary>   Creates web host builder. </summary>
+        /// <remarks>   Vanvoljg, 18-Jul-19. </remarks>
+        /// <param name="args"> An array of command-line argument strings. </param>
+        /// <returns>   The new web host builder. </returns>
+        ///-------------------------------------------------------------------------------------------------
 
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
             WebHost.CreateDefaultBuilder(args)

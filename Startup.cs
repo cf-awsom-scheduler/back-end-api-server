@@ -17,21 +17,43 @@ using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using awsomAPI.Models;
 
-//Morgana - JWT Auth Functionality found here https://jasonwatmore.com/post/2019/01/08/aspnet-core-22-role-based-authorization-tutorial-with-example-api#app-settings-json
+//Morgana - JWT Auth Functionality found here https://jasonwatmore.com/post/2019/01/08/aspnet-core-22-role-based-authorization-tutorial-with-example-api#app-settings-json.
 
 namespace awsomAPI
 {
+    ///-------------------------------------------------------------------------------------------------
+    /// <summary>   A startup. </summary>
+    /// <remarks>   Vanvoljg, 18-Jul-19. </remarks>
+    ///-------------------------------------------------------------------------------------------------
+
     public class Startup
     {
-      private string _secret = null;
+        private string _secret = null;
+
+        ///-------------------------------------------------------------------------------------------------
+        /// <summary>   Gets the configuration. </summary>
+        /// <value> The configuration. </value>
+        ///-------------------------------------------------------------------------------------------------
+
+        public IConfiguration Configuration { get; }
+
+        ///-------------------------------------------------------------------------------------------------
+        /// <summary>   Constructor. </summary>
+        /// <remarks>   Vanvoljg, 18-Jul-19. </remarks>
+        /// <param name="configuration">    The configuration. </param>
+        ///-------------------------------------------------------------------------------------------------
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
         }
 
-        public IConfiguration Configuration { get; }
+        ///-------------------------------------------------------------------------------------------------
+        /// <summary>   Configure services. </summary>
+        /// <remarks>   Vanvoljg, 18-Jul-19. </remarks>
+        /// <param name="services"> The services. </param>
+        ///-------------------------------------------------------------------------------------------------
 
-        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
             _secret = Configuration["Secret"];
@@ -40,29 +62,34 @@ namespace awsomAPI
             services.AddCors();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
-            services.AddDbContext<AwsomApiContext>( opt => 
-              opt.UseSqlServer(Configuration.GetConnectionString("ProductionConnection")));
+            services.AddDbContext<AwsomApiContext>(opt =>
+            opt.UseSqlServer(Configuration.GetConnectionString("ProductionConnection")));
 
-            services.AddAuthentication( auth => 
+            services.AddAuthentication(auth =>
             {
-              auth.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-              auth.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-            })
-            .AddJwtBearer( jwt => 
+                auth.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                auth.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            }).AddJwtBearer(jwt =>
             {
-              jwt.RequireHttpsMetadata = true;
-              jwt.SaveToken = true;
-              jwt.TokenValidationParameters = new TokenValidationParameters
-              {
-                ValidateIssuerSigningKey = true,
-                IssuerSigningKey = new SymmetricSecurityKey(_key),
-                ValidateIssuer = false,
-                ValidateAudience = false
-              };
+                jwt.RequireHttpsMetadata = true;
+                jwt.SaveToken = true;
+                jwt.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = new SymmetricSecurityKey(_key),
+                    ValidateIssuer = false,
+                    ValidateAudience = false
+                };
             });
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+        ///-------------------------------------------------------------------------------------------------
+        /// <summary>   Configures. </summary>
+        /// <remarks>   Vanvoljg, 18-Jul-19. </remarks>
+        /// <param name="app">  The application. </param>
+        /// <param name="env">  The environment. </param>
+        ///-------------------------------------------------------------------------------------------------
+
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
             if (env.IsDevelopment())
@@ -78,7 +105,7 @@ namespace awsomAPI
             app.UseHttpsRedirection();
             app.UseAuthentication();
             app.UseMvc();
-            app.UseCors( settings => settings.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
+            app.UseCors(settings => settings.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
         }
     }
 }
