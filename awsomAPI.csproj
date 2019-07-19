@@ -13,7 +13,7 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <DocumentationFile>D:\cf\back-end-api-server\awsomAPI.xml</DocumentationFile>
+    <DocumentationFile>D:\cf\back-end\back-end-api-server\awsomAPI.xml</DocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>
