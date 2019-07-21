@@ -1,0 +1,386 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>awsomAPI</name>
+    </assembly>
+    <members>
+        <member name="M:awsomAPI.Controllers.TrialRequestController.#ctor(awsomAPI.Models.AwsomApiContext)">
+            -------------------------------------------------------------------------------------------------
+             <summary>   Constructor. </summary>
+             <remarks>   Vanvoljg, 18-Jul-19. </remarks>
+             <param name="context">  The context. </param>
+            -------------------------------------------------------------------------------------------------
+        </member>
+        <member name="M:awsomAPI.Controllers.TrialRequestController.GetTrialRequests">
+            -------------------------------------------------------------------------------------------------
+             <summary>
+                 (An Action that handles HTTP GET requests) (Restricted to Roles = Role.Admin) gets trial
+                 requests.
+             </summary>
+             <remarks>   Vanvoljg, 18-Jul-19. </remarks>
+             <returns>   An asynchronous result that yields the trial requests. </returns>
+            -------------------------------------------------------------------------------------------------
+        </member>
+        <member name="M:awsomAPI.Controllers.TrialRequestController.TrialRequestDetailView(System.Int64)">
+            -------------------------------------------------------------------------------------------------
+             <summary>
+                 (An Action that handles HTTP GET requests) (Restricted to Roles = Role.Admin + "," +
+                 Role.User) trial request detail view.
+             </summary>
+             <remarks>   Vanvoljg, 18-Jul-19. </remarks>
+             <param name="id">   The identifier. </param>
+             <returns>   An asynchronous result that yields an ActionResult&lt;TrialRequest&gt;. </returns>
+            -------------------------------------------------------------------------------------------------
+        </member>
+        <member name="M:awsomAPI.Controllers.TrialRequestController.SelectStudent(awsomAPI.Models.StudentTeacherSelectedRelation)">
+            -------------------------------------------------------------------------------------------------
+             <summary>
+                 (An Action that handles HTTP POST requests) (Restricted to Roles = Role.Admin + "," +
+                 Role.User) select student.
+             </summary>
+             <remarks>   Vanvoljg, 18-Jul-19. </remarks>
+             <param name="selection">    The selection. </param>
+             <returns>   An asynchronous result that yields an ActionResult. </returns>
+            -------------------------------------------------------------------------------------------------
+        </member>
+        <member name="M:awsomAPI.Controllers.TrialRequestController.AddNewTrialRequest(awsomAPI.Models.TrialRequest)">
+            -------------------------------------------------------------------------------------------------
+             <summary>   (An Action that handles HTTP POST requests) adds a new trial request. </summary>
+            
+             <remarks>   Vanvoljg, 18-Jul-19. </remarks>
+            
+             <param name="trialRequest"> The trial request. </param>
+            
+             <returns>   An asynchronous result that yields an ActionResult&lt;TrialRequest&gt;. </returns>
+            -------------------------------------------------------------------------------------------------
+        </member>
+        <member name="T:awsomAPI.Controllers.UsersController">
+            -------------------------------------------------------------------------------------------------
+             <summary>   A controller for handling users. </summary>
+             <remarks>   Vanvoljg, 18-Jul-19. </remarks>
+            -------------------------------------------------------------------------------------------------
+        </member>
+        <member name="M:awsomAPI.Controllers.UsersController.#ctor(awsomAPI.Models.AwsomApiContext,Microsoft.Extensions.Configuration.IConfiguration)">
+            -------------------------------------------------------------------------------------------------
+             <summary>   Constructor. </summary>
+             <remarks>   Vanvoljg, 18-Jul-19. </remarks>
+             <param name="context">          The context. </param>
+             <param name="configuration">    The configuration. </param>
+            -------------------------------------------------------------------------------------------------
+        </member>
+        <member name="M:awsomAPI.Controllers.UsersController.GetUsers">
+            -------------------------------------------------------------------------------------------------
+             <summary>
+                 (An Action that handles HTTP GET requests) (Restricted to Roles = Role.Admin) gets the
+                 users.
+             </summary>
+             <remarks>   Vanvoljg, 18-Jul-19. </remarks>
+             <returns>   An asynchronous result that yields all the users. </returns>
+            -------------------------------------------------------------------------------------------------
+        </member>
+        <member name="M:awsomAPI.Controllers.UsersController.GetUser(System.Int64)">
+            -------------------------------------------------------------------------------------------------
+             <summary>   (An Action that handles HTTP GET requests) gets a user. </summary>
+             <remarks>   Vanvoljg, 18-Jul-19. </remarks>
+             <param name="id">   The identifier. </param>
+             <returns>   An asynchronous result that yields the user. </returns>
+            -------------------------------------------------------------------------------------------------
+        </member>
+        <member name="M:awsomAPI.Controllers.UsersController.Signin(awsomAPI.Models.User)">
+            -------------------------------------------------------------------------------------------------
+             <summary>
+                 (An Action that handles HTTP POST requests) signins the given user from frontend.
+             </summary>
+             <remarks>   Vanvoljg, 18-Jul-19. </remarks>
+             <param name="userFromFrontend"> The user from frontend. </param>
+             <returns>   An asynchronous result that yields an ActionResult&lt;User&gt;. </returns>
+            -------------------------------------------------------------------------------------------------
+        </member>
+        <member name="M:awsomAPI.Controllers.UsersController.AddUser(awsomAPI.Models.User)">
+            -------------------------------------------------------------------------------------------------
+             <summary>   (An Action that handles HTTP POST requests) adds a user. </summary>
+             <remarks>   Vanvoljg, 18-Jul-19. </remarks>
+             <param name="user"> The user. </param>
+             <returns>   An asynchronous result that yields an ActionResult&lt;User&gt;. </returns>
+            -------------------------------------------------------------------------------------------------
+        </member>
+        <member name="T:awsomAPI.Models.AwsomApiContext">
+            -------------------------------------------------------------------------------------------------
+             <summary>   An awsom API context. </summary>
+             <remarks>   Vanvoljg, 18-Jul-19. </remarks>
+            -------------------------------------------------------------------------------------------------
+        </member>
+        <member name="M:awsomAPI.Models.AwsomApiContext.#ctor(Microsoft.EntityFrameworkCore.DbContextOptions{awsomAPI.Models.AwsomApiContext})">
+            -------------------------------------------------------------------------------------------------
+             <summary>   Constructor. </summary>
+             <remarks>   Vanvoljg, 18-Jul-19. </remarks>
+             <param name="options">  Options for controlling the operation. </param>
+            -------------------------------------------------------------------------------------------------
+        </member>
+        <member name="P:awsomAPI.Models.AwsomApiContext.Users">
+            -------------------------------------------------------------------------------------------------
+             <summary>   Gets or sets the users. </summary>
+             <value> The users. </value>
+            -------------------------------------------------------------------------------------------------
+        </member>
+        <member name="P:awsomAPI.Models.AwsomApiContext.TrialRequests">
+            -------------------------------------------------------------------------------------------------
+             <summary>   Gets or sets the trial requests. </summary>
+             <value> The trial requests. </value>
+            -------------------------------------------------------------------------------------------------
+        </member>
+        <member name="P:awsomAPI.Models.AwsomApiContext.TeacherSelections">
+            -------------------------------------------------------------------------------------------------
+             <summary>   Gets or sets the teacher selections. </summary>
+             <value> The teacher selections. </value>
+            -------------------------------------------------------------------------------------------------
+        </member>
+        <member name="T:awsomAPI.Models.Role">
+            -------------------------------------------------------------------------------------------------
+             <summary>   A role model. </summary>
+             <remarks>   Vanvoljg, 18-Jul-19. </remarks>
+            -------------------------------------------------------------------------------------------------
+        </member>
+        <member name="T:awsomAPI.Models.StudentTeacherSelectedRelation">
+            -------------------------------------------------------------------------------------------------
+             <summary>   A student teacher selected relation. </summary>
+             <remarks>   Vanvoljg, 18-Jul-19. </remarks>
+            -------------------------------------------------------------------------------------------------
+        </member>
+        <member name="P:awsomAPI.Models.StudentTeacherSelectedRelation.Id">
+            -------------------------------------------------------------------------------------------------
+             <summary>   Gets or sets the identifier. </summary>
+             <value> The identifier. </value>
+            -------------------------------------------------------------------------------------------------
+        </member>
+        <member name="P:awsomAPI.Models.StudentTeacherSelectedRelation.TrialRequestId">
+            -------------------------------------------------------------------------------------------------
+             <summary>   Gets or sets the identifier of the trial request. </summary>
+             <value> The identifier of the trial request. </value>
+            -------------------------------------------------------------------------------------------------
+        </member>
+        <member name="P:awsomAPI.Models.StudentTeacherSelectedRelation.TeacherId">
+            -------------------------------------------------------------------------------------------------
+             <summary>   Gets or sets the identifier of the teacher. </summary>
+             <value> The identifier of the teacher. </value>
+            -------------------------------------------------------------------------------------------------
+        </member>
+        <member name="T:awsomAPI.Models.TrialRequest">
+            -------------------------------------------------------------------------------------------------
+             <summary>   A trial request. </summary>
+             <remarks>   Vanvoljg, 18-Jul-19. </remarks>
+            -------------------------------------------------------------------------------------------------
+        </member>
+        <member name="P:awsomAPI.Models.TrialRequest.Id">
+            -------------------------------------------------------------------------------------------------
+             <summary>   Gets or sets the identifier. </summary>
+             <value> The identifier. </value>
+            -------------------------------------------------------------------------------------------------
+        </member>
+        <member name="P:awsomAPI.Models.TrialRequest.ParentName">
+            -------------------------------------------------------------------------------------------------
+             <summary>   Gets or sets the name of the parent. </summary>
+             <value> The name of the parent. </value>
+            -------------------------------------------------------------------------------------------------
+        </member>
+        <member name="P:awsomAPI.Models.TrialRequest.StudentName">
+            -------------------------------------------------------------------------------------------------
+             <summary>   Gets or sets the name of the student. </summary>
+             <value> The name of the student. </value>
+            -------------------------------------------------------------------------------------------------
+        </member>
+        <member name="P:awsomAPI.Models.TrialRequest.StudentBirthDate">
+            -------------------------------------------------------------------------------------------------
+             <summary>   Gets or sets the student birth date. </summary>
+             <value> The student birth date. </value>
+            -------------------------------------------------------------------------------------------------
+        </member>
+        <member name="P:awsomAPI.Models.TrialRequest.Email">
+            -------------------------------------------------------------------------------------------------
+             <summary>   Gets or sets the email. </summary>
+             <value> The email. </value>
+            -------------------------------------------------------------------------------------------------
+        </member>
+        <member name="P:awsomAPI.Models.TrialRequest.Phone">
+            -------------------------------------------------------------------------------------------------
+             <summary>   Gets or sets the phone. </summary>
+             <value> The phone. </value>
+            -------------------------------------------------------------------------------------------------
+        </member>
+        <member name="P:awsomAPI.Models.TrialRequest.Address">
+            -------------------------------------------------------------------------------------------------
+             <summary>   Gets or sets the address. </summary>
+             <value> The address. </value>
+            -------------------------------------------------------------------------------------------------
+        </member>
+        <member name="P:awsomAPI.Models.TrialRequest.City">
+            -------------------------------------------------------------------------------------------------
+             <summary>   Gets or sets the city. </summary>
+             <value> The city. </value>
+            -------------------------------------------------------------------------------------------------
+        </member>
+        <member name="P:awsomAPI.Models.TrialRequest.ZipCode">
+            -------------------------------------------------------------------------------------------------
+             <summary>   Gets or sets the zip code. </summary>
+             <value> The zip code. </value>
+            -------------------------------------------------------------------------------------------------
+        </member>
+        <member name="P:awsomAPI.Models.TrialRequest.Region">
+            -------------------------------------------------------------------------------------------------
+             <summary>   Gets or sets the region. </summary>
+             <value> The region. </value>
+            -------------------------------------------------------------------------------------------------
+        </member>
+        <member name="P:awsomAPI.Models.TrialRequest.Instrument">
+            -------------------------------------------------------------------------------------------------
+             <summary>   Gets or sets the instrument. </summary>
+             <value> The instrument. </value>
+            -------------------------------------------------------------------------------------------------
+        </member>
+        <member name="P:awsomAPI.Models.TrialRequest.HasInstrument">
+            -------------------------------------------------------------------------------------------------
+             <summary>   Gets or sets the has instrument. </summary>
+             <value> The has instrument. </value>
+            -------------------------------------------------------------------------------------------------
+        </member>
+        <member name="P:awsomAPI.Models.TrialRequest.Availability">
+            -------------------------------------------------------------------------------------------------
+             <summary>   Gets or sets the availability. </summary>
+             <value> The availability. </value>
+            -------------------------------------------------------------------------------------------------
+        </member>
+        <member name="P:awsomAPI.Models.TrialRequest.Experience">
+            -------------------------------------------------------------------------------------------------
+             <summary>   Gets or sets the experience. </summary>
+             <value> The experience. </value>
+            -------------------------------------------------------------------------------------------------
+        </member>
+        <member name="P:awsomAPI.Models.TrialRequest.Notes">
+            -------------------------------------------------------------------------------------------------
+             <summary>   Gets or sets the notes. </summary>
+             <value> The notes. </value>
+            -------------------------------------------------------------------------------------------------
+        </member>
+        <member name="T:awsomAPI.Models.User">
+            -------------------------------------------------------------------------------------------------
+             <summary>   A user. </summary>
+             <remarks>   Vanvoljg, 18-Jul-19. </remarks>
+            -------------------------------------------------------------------------------------------------
+        </member>
+        <member name="P:awsomAPI.Models.User.Id">
+            -------------------------------------------------------------------------------------------------
+             <summary>   Gets or sets the identifier. </summary>
+             <value> The identifier. </value>
+            -------------------------------------------------------------------------------------------------
+        </member>
+        <member name="P:awsomAPI.Models.User.Name">
+            -------------------------------------------------------------------------------------------------
+             <summary>   Gets or sets the name. </summary>
+             <value> The name. </value>
+            -------------------------------------------------------------------------------------------------
+        </member>
+        <member name="P:awsomAPI.Models.User.Email">
+            -------------------------------------------------------------------------------------------------
+             <summary>   Gets or sets the email. </summary>
+             <value> The email. </value>
+            -------------------------------------------------------------------------------------------------
+        </member>
+        <member name="P:awsomAPI.Models.User.Role">
+            -------------------------------------------------------------------------------------------------
+             <summary>   Gets or sets the role. </summary>
+             <value> The role. </value>
+            -------------------------------------------------------------------------------------------------
+        </member>
+        <member name="P:awsomAPI.Models.User.Password">
+            -------------------------------------------------------------------------------------------------
+             <summary>   Gets or sets the password. </summary>
+             <value> The password. </value>
+            -------------------------------------------------------------------------------------------------
+        </member>
+        <member name="P:awsomAPI.Models.User.Region">
+            -------------------------------------------------------------------------------------------------
+             <summary>   Gets or sets the region. </summary>
+             <value> The region. </value>
+            -------------------------------------------------------------------------------------------------
+        </member>
+        <member name="P:awsomAPI.Models.User.Address">
+            -------------------------------------------------------------------------------------------------
+             <summary>   Gets or sets the address. </summary>
+             <value> The address. </value>
+            -------------------------------------------------------------------------------------------------
+        </member>
+        <member name="P:awsomAPI.Models.User.City">
+            -------------------------------------------------------------------------------------------------
+             <summary>   Gets or sets the city. </summary>
+             <value> The city. </value>
+            -------------------------------------------------------------------------------------------------
+        </member>
+        <member name="P:awsomAPI.Models.User.ZipCode">
+            -------------------------------------------------------------------------------------------------
+             <summary>   Gets or sets the zip. </summary>
+             <value> The zip. </value>
+            -------------------------------------------------------------------------------------------------
+        </member>
+        <member name="P:awsomAPI.Models.User.Token">
+            -------------------------------------------------------------------------------------------------
+             <summary>   Gets or sets the token. </summary>
+             <value> The token. </value>
+            -------------------------------------------------------------------------------------------------
+        </member>
+        <member name="T:awsomAPI.Program">
+            -------------------------------------------------------------------------------------------------
+             <summary>   A program. </summary>
+             <remarks>   Vanvoljg, 18-Jul-19. </remarks>
+            -------------------------------------------------------------------------------------------------
+        </member>
+        <member name="M:awsomAPI.Program.Main(System.String[])">
+            -------------------------------------------------------------------------------------------------
+             <summary>   Main entry-point for this application. </summary>
+             <remarks>   Vanvoljg, 18-Jul-19. </remarks>
+             <param name="args"> An array of command-line argument strings. </param>
+            -------------------------------------------------------------------------------------------------
+        </member>
+        <member name="M:awsomAPI.Program.CreateWebHostBuilder(System.String[])">
+            -------------------------------------------------------------------------------------------------
+             <summary>   Creates web host builder. </summary>
+             <remarks>   Vanvoljg, 18-Jul-19. </remarks>
+             <param name="args"> An array of command-line argument strings. </param>
+             <returns>   The new web host builder. </returns>
+            -------------------------------------------------------------------------------------------------
+        </member>
+        <member name="T:awsomAPI.Startup">
+            -------------------------------------------------------------------------------------------------
+             <summary>   A startup. </summary>
+             <remarks>   Vanvoljg, 18-Jul-19. </remarks>
+            -------------------------------------------------------------------------------------------------
+        </member>
+        <member name="P:awsomAPI.Startup.Configuration">
+            -------------------------------------------------------------------------------------------------
+             <summary>   Gets the configuration. </summary>
+             <value> The configuration. </value>
+            -------------------------------------------------------------------------------------------------
+        </member>
+        <member name="M:awsomAPI.Startup.#ctor(Microsoft.Extensions.Configuration.IConfiguration)">
+            -------------------------------------------------------------------------------------------------
+             <summary>   Constructor. </summary>
+             <remarks>   Vanvoljg, 18-Jul-19. </remarks>
+             <param name="configuration">    The configuration. </param>
+            -------------------------------------------------------------------------------------------------
+        </member>
+        <member name="M:awsomAPI.Startup.ConfigureServices(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            -------------------------------------------------------------------------------------------------
+             <summary>   Configure services. </summary>
+             <remarks>   Vanvoljg, 18-Jul-19. </remarks>
+             <param name="services"> The services. </param>
+            -------------------------------------------------------------------------------------------------
+        </member>
+        <member name="M:awsomAPI.Startup.Configure(Microsoft.AspNetCore.Builder.IApplicationBuilder,Microsoft.AspNetCore.Hosting.IHostingEnvironment)">
+            -------------------------------------------------------------------------------------------------
+             <summary>   Configures. </summary>
+             <remarks>   Vanvoljg, 18-Jul-19. </remarks>
+             <param name="app">  The application. </param>
+             <param name="env">  The environment. </param>
+            -------------------------------------------------------------------------------------------------
+        </member>
+    </members>
+</doc>
